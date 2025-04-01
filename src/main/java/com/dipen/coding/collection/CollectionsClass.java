@@ -88,5 +88,6 @@ public class CollectionsClass {
         // both ways to create new list
         ArrayList<Integer> alist=new ArrayList<>(Arrays.asList(34,4,5));
         List<Integer> iList=Arrays.asList(5,6,7);
+        List<Integer> oList=List.of(2,4,5,6);
     }
 }

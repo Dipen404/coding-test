@@ -124,3 +124,20 @@ class Student {
     }
 }
 //output {Odd=[1, 3, 5], Even=[2, 4, 6]}
+//find word occurrences in a list groupingBy
+class WordCount{
+    public static void main(String[] args) {
+        List<String> list= List.of("Java","Java","World","Hello","World","Java");
+        Map<String,Long> map=list.stream().collect(Collectors.groupingBy(w->w,Collectors.counting()));
+        System.out.println(map); //output {Java=3, Hello=1, World=2}
+    }
+}
+
+//concatenate string using joining()
+class Concatenate{
+    public static void main(String[] args) {
+        List<String> list= List.of("Java","is","awesome");
+        String joined=list.stream().collect(Collectors.joining(" "));
+        System.out.println(joined); //output Java is awesome
+    }
+}
