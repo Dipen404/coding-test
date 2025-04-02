@@ -1,0 +1,123 @@
+Each method in java 8 stream API can be categorized into Intermediate, Terminal and Static Factory Methods,
+Short-circuiting operations, primitive Stream specializations
+
+A. Intermediate Operations (Return a new stream)
+FMFDSSPLS
+1. filter(Predicate<T>)
+filters elements based on a condition
+
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "David");
+names.stream()
+     .filter(name -> name.length() > 4)
+     .forEach(System.out::println); // Output: Alice, Charlie, David
+
+2. map(Function<T,R>)
+transforms each element
+
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4);
+numbers.stream()
+       .map(n -> n * 2)
+       .forEach(System.out::println); // Output: 2, 4, 6, 8
+
+3. flatMap(Function <T, Stream<R>>)
+Flattens nested collections into a single stream
+
+List<List<String>> nestedList = Arrays.asList(
+    Arrays.asList("A", "B"),
+    Arrays.asList("C", "D")
+);
+nestedList.stream()
+          .flatMap(Collection::stream) //List::stream
+          .forEach(System.out::println); // Output: A, B, C, D
+
+List<List<Integer>> list=Arrays.asList(Arrays.asList(1,2),Arrays.asList(3,4),Arrays.asList(5,6));
+        List<Integer> flatten=list
+                                .stream()
+                                .flatMap(Collection::stream)
+                                .collect(Collectors.toList());
+        System.out.println(flatten);
+
+4. distinct()
+removes duplicate
+
+List<Integer> numbers = Arrays.asList(1, 2, 2, 3, 4, 4);
+numbers.stream()
+       .distinct()
+       .forEach(System.out::println); // Output: 1, 2, 3, 4 still maintains insertion order
+
+Set<Integer> uniqueNums=numbers.stream()
+                    .collect(Collectors.toSet()); //removes duplicate, but it does not maintain insertion order, more efficient as intermediate distinct is not used
+
+5. sorted()
+Sorts elements naturally
+If the elements are comparable (like Integer, String etc) to sort elements in natural order
+
+List<String> names = Arrays.asList("Bob", "Alice", "David");
+names.stream()
+     .sorted()
+     .forEach(System.out::println); // Output: Alice, Bob, David
+
+6. sorted(Comparator<T>)
+sort element in a custom order other than natural order
+Sorts using a custom comparator
+
+List<String> names = Arrays.asList("Bob", "Alice", "David");
+names.stream()
+     .sorted((a, b) -> b.compareTo(a)) // Reverse order
+     //.sorted((a,b)->b-a)
+     //.sorted(Comparator.reverseOrder())
+     .forEach(System.out::println); // Output: David, Bob, Alice
+
+For custom class we can use Comparator.comparing
+List<Employee> employees = Arrays.asList(
+    new Employee("John", 25),
+    new Employee("Alice", 30),
+    new Employee("Bob", 20)
+);
+employees.stream()
+         .sorted(Comparator.comparing(Employee::getAge))
+         .forEach(e -> System.out.println(e.getName()));
+
+Here Employee us a Custom class with fields name and age and sorting is done by age
+If you want to sort objects based on one of their fields, but you do not want to write your own comparator manually
+it simplifies the code and make it more readable.
+If you want to do sorting in reverse order, you can do chaining the comparator with reversed()
+
+employees.stream()
+         .sorted(Comparator.comparing(Employee::getAge).reversed())  // Sort by age in reverse order
+         .forEach(e -> System.out.println(e.getName() + ": " + e.getAge()));
+
+
+Sorting by multiple fields (chaining comparators)
+This will first sort by age and if two employees have the same age, it will sort them by their name.
+employees.stream()
+         .sorted(Comparator.comparing(Employee::getAge)
+                           .thenComparing(Employee::getName))  // Sorting by age and name
+         .forEach(e -> System.out.println(e.getName() + ": " + e.getAge()));
+
+
+7. peek(Consumer<T>)
+Debugging/logging without modifying the stream
+
+List<Integer> numbers = Arrays.asList(1, 2, 3);
+numbers.stream()
+       .peek(n -> System.out.println("Before map: " + n))
+       .map(n -> n * 2)
+       .peek(n -> System.out.println("After map: " + n))
+       .forEach(System.out::println);
+
+8. limit (long n)
+Limits the stream to the first n elements
+
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+numbers.stream()
+       .limit(3)
+       .forEach(System.out::println); // Output: 1, 2, 3
+
+9. skip(long n)
+Skips the first n elements
+
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+numbers.stream()
+       .skip(2)
+       .forEach(System.out::println); // Output: 3, 4, 5
