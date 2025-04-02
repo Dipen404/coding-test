@@ -121,3 +121,43 @@ List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
 numbers.stream()
        .skip(2)
        .forEach(System.out::println); // Output: 3, 4, 5
+
+
+
+B. Terminal Operations (Produce a result or side-effect)
+
+1.  forEach(Consumer<T>)
+performs an action on each element
+
+List<String> names = Arrays.asList("Alice", "Bob");
+names.stream().forEach(System.out::println); // Output: Alice, Bob
+
+2. toArray()
+converts stream into an array
+
+List<String> names = Arrays.asList("Alice", "Bob");
+String[] array = names.stream().toArray(String[]::new);
+System.out.println(Arrays.toString(array)); // Output: [Alice, Bob]
+String[] array = list.toArray(new String[0]); //specify the type
+Object[] array = list.toArray(); // no type specified so Object array and need to type cast
+
+3. reduce(BinaryOperator<T>)
+Combines elements into a single result
+List<Integer> numbers=List.of(1,2,3,4);
+int sum=numbers.stream().reduce(0,Integer::sum);
+
+4. collect(Collector<T,A,R>)
+collects elements into a collection (eg list, set, map)
+
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+List<String> filteredNames = names.stream()
+                                 .filter(name -> name.length() > 3)
+                                 .collect(Collectors.toList());
+System.out.println(filteredNames); // Output: [Alice, Charlie]
+
+5. min(Comparator<T>)
+find the smallest element
+
+List<Integer> numbers = Arrays.asList(5, 3, 8, 1);
+Optional<Integer> min = numbers.stream().min(Integer::compareTo);
+System.out.println(min.get()); // Output: 1
