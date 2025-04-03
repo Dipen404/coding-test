@@ -1,0 +1,48 @@
+1. When datatype are not from custom object just String, Integer, Float
+List<Integer> numbers = Arrays.asList(5, 3, 8, 1);
+Optional<Integer> min = numbers.stream().min(Integer::compareTo);
+System.out.println(min.get()); // Output: 1
+Optional<Integer> max=numbers.stream().max(Integer::compareTo)
+System.out.println(max.get()); // output 8
+
+2. Finding max and min from custom objects fields
+We need Comparator for custom objects fields
+
+class Person {
+    private String name;
+    private int age;
+    private double salary;
+}
+// Youngest person
+Optional<Person> youngest = people.stream()
+    .min(Comparator.comparingInt(Person::getAge));
+
+// Oldest person
+Optional<Person> oldest = people.stream()
+    .max(Comparator.comparingInt(Person::getAge));
+
+// Person with lowest salary
+Optional<Person> lowestSalary = people.stream()
+    .min(Comparator.comparingDouble(Person::getSalary));
+
+// Person with highest salary
+Optional<Person> highestSalary = people.stream()
+    .max(Comparator.comparingDouble(Person::getSalary));
+
+// First in alphabetical order
+Optional<Person> firstAlphabetically = people.stream()
+    .min(Comparator.comparing(Person::getName));
+
+// Last in alphabetical order
+Optional<Person> lastAlphabetically = people.stream()
+    .max(Comparator.comparing(Person::getName));
+
+// Find person with minimum age, and if ages are equal, minimum salary
+Optional<Person> result = people.stream()
+    .min(Comparator.comparingInt(Person::getAge)
+                  .thenComparingDouble(Person::getSalary));
+Note:
+Use Comparator.comparing() for object fields
+For specific variants for primitive fields use, comparingInt(),comparingDouble(),comparingLong()
+The result is wrapped in Optional since the stream might be empty
+Chain comparators with thenComparing() for secondary sorting criteria
