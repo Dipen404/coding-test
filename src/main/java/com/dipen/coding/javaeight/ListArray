@@ -1,0 +1,64 @@
+1. Convert a list to an array
+using toArray() method
+List<Integer> numbers=List.of(1,2,3,4,5);
+a) Object [] objArr=numbers.toArray();//no parameter specified then object array
+b) Integer[] numbersArray=numbers.toArray(new Integer[0]);//parameter specified for particular type
+c) Integer [] numbersArray=numbers.stream().toArray(Integer[]::new); //using stream api
+
+All these 3 ways will create only wrapper objects not primitive
+a) If we need primitive either we convert the wrapper objects to primitive using for loop
+int[] primitiveArray = new int[numbersArray.length];
+for (int i = 0; i < numbersArray.length; i++) {
+    primitiveArray[i] = numbersArray[i];  // Unboxing the Integer to int
+}
+
+b) Using stream to convert primitive
+int[] primitiveArray = numbers.stream().mapToInt(Integer::intValue).toArray();
+long[] longArray = numbers.stream().mapToLong(Integer::longValue).toArray();
+double[] doubleArray = numbers.stream().mapToDouble(Integer::doubleValue).toArray();
+
+Note:
+System.out.println(array) wont print array it will print hashcode, either use loop to print or use toString() method
+System.out.println(Arrays.toString(array))
+
+2. Convert array to list
+a) Using Arrays.asList() method
+String [] ={"apple","mango","banana"};
+List<String> =Arrays.asList(array);
+Note: The list returned is fixed-size, you can not add or remove elements from it by can modify existing elements
+does not work for primitive such as int, double but works if the array is of objects like String , Integer
+As List only works for Objects rather than primitive.
+
+b) Using loop to manually populate the list
+ String[] array = {"Apple", "Banana", "Cherry"};
+ List<String> list = new ArrayList<>();
+ for (String item : array) {
+    list.add(item);
+ }
+
+c) Collections.addAll() method
+
+  String[] array = {"Apple", "Banana", "Cherry"};
+  List<String> list = new ArrayList<>();
+  Collections.addAll(list, array);
+
+Note: This also does not work for primitive, works for objects only
+
+d) mapToObj way
+int[] numbers = {1, 2, 3, 4, 5};
+List<Integer> numberList = Arrays.stream(numbers)
+    .mapToObj(Integer::valueOf)
+    .collect(Collectors.toList());
+
+e) boxed way (boxes the primitive values into Objects)
+int[] numbers = {1, 2, 3, 4, 5};
+List<Integer> numberList = Arrays.stream(numbers)
+    .boxed()
+    .collect(Collectors.toList());
+
+f) Stream API way
+String[] array = {"Apple", "Banana", "Cherry"};
+List<String> list = Arrays.stream(array).collect(Collectors.toList());
+
+Note: if the original array is of objects array then this approach is ok, if primitive then need to follow e) or f)
+Arrays.stream(numbers) converts int [] array into an IntStream
