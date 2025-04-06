@@ -1,0 +1,179 @@
+In Java both Comparable and Comparator are interfaces used to sort collections of objects
+1. Comparable Interface
+
+Purpose: Used to define the natural ordering of objects (default sorting logic)
+Package: java.lang.Comparable
+Method: compareTo(T obj)
+Modifies the original class: The class itself must implement Comparable to define how its instances should be compared
+Single Sorting logic: Only one compareTo() method can be defined for a class
+Usage: Collections.sort(list)
+Java 8+: can not use lambda
+
+class Student implements Comparable<Student> {
+    private String name;
+    private int age;
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public int compareTo(Student other) {
+        return this.age - other.age; // Natural ordering by age
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + age + ")";
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("Alice", 22));
+        students.add(new Student("Bob", 20));
+        students.add(new Student("Charlie", 25));
+
+        Collections.sort(students); // Uses compareTo() for sorting
+
+        System.out.println(students);
+        // Output: [Bob (20), Alice (22), Charlie (25)]
+    }
+}
+
+2. Comparator Interface
+
+Purpose: Used to define custom ordering (multiple sorting logics) without modifying the original class
+Package: java.util.Comparator
+MethodL compare(T obj, T obj2)
+External to the class: A separate class or lambda expression defines the comparison logic
+Multiple sorting logics: Can define many Comparator implementations for different sorting needs
+Usage: Collections.sort(list,comparator)
+Java 8+: can use lambdas ((a,b)->a.age-b.age)
+
+import java.util.Comparator;
+
+class NameComparator implements Comparator<Student> {
+    @Override
+    public int compare(Student s1, Student s2) {
+        return s1.getName().compareTo(s2.getName()); // Sort by name
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("Alice", 22));
+        students.add(new Student("Bob", 20));
+        students.add(new Student("Charlie", 25));
+
+        // Sort using Comparator (by name)
+        Collections.sort(students, new NameComparator());
+
+        System.out.println(students);
+        // Output: [Alice (22), Bob (20), Charlie (25)]
+    }
+}
+
+// Ascending Comparator (natural order)
+class AgeAscendingComparator implements Comparator<Student> {
+    @Override
+    public int compare(Student s1, Student s2) {
+        return s1.getAge() - s2.getAge();
+    }
+}
+
+// Descending Comparator
+class AgeDescendingComparator implements Comparator<Student> {
+    @Override
+    public int compare(Student s1, Student s2) {
+        return s2.getAge() - s1.getAge(); // Reverse order
+    }
+}
+
+// Usage:
+Collections.sort(students, new AgeAscendingComparator());  // Ascending
+Collections.sort(students, new AgeDescendingComparator()); // Descending
+
+Using Lambda (Java 8+)
+
+public class Main {
+    public static void main(String[] args) {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("Alice", 22));
+        students.add(new Student("Bob", 20));
+        students.add(new Student("Charlie", 25));
+
+        // Sort by age using lambda
+        Collections.sort(students, (s1, s2) -> s1.getAge() - s2.getAge());
+
+        // Sort by name using lambda
+        Collections.sort(students, (s1, s2) -> s1.getName().compareTo(s2.getName()));
+
+        // Using Comparator.comparing()
+        students.sort(Comparator.comparing(Student::getName)); // Sort by name
+        students.sort(Comparator.comparingInt(Student::getAge)); // Sort by age
+    }
+}
+
+
+3. Sorting array in Java
+
+Using Arrays.sort() provided by java.util.Arrays
+a) Sorting an array of integers in ascending order
+int [] numbers={5,6,2,1};
+Arrays.sort(numbers);
+
+String[] names = {"John", "Alice", "Bob", "David"};
+
+// Sorting the array in alphabetical order
+Arrays.sort(names);
+
+b) Sorting in Descending order
+Integer[] numbers = {5, 2, 8, 3, 1};
+
+// Sorting the array in descending order
+Arrays.sort(numbers, Collections.reverseOrder());
+
+Note: If you are dealing with primitive types like int, they can not directly sorted in descending order using
+Collections.reverseOrder(). You need to use a wrapper class like Integer [] instead of int []
+Arrays.sort() can not directly accept a comparator for primitive types. We can use reverse sort with a custom method
+
+int[] numbers = {5, 2, 8, 3, 1};
+
+// Sorting the array in ascending order first
+Arrays.sort(numbers);
+
+// Reversing the array to make it descending
+reverse(numbers);
+
+public static void reverse(int[] array) {
+        int left = 0;
+        int right = array.length - 1;
+
+        // Swap the elements
+        while (left < right) {
+            int temp = array[left];
+            array[left] = array[right];
+            array[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+Descending sorting with wrapper class
+
+// Initial primitive int array
+        int[] numbers = {5, 2, 8, 3, 1};
+
+// Convert the primitive int[] to Integer[] (wrapper class)
+Integer[] boxedNumbers = Arrays.stream(numbers)  // Convert int[] to Stream<Integer>
+                                .boxed()           // Box each element to Integer
+                                .toArray(Integer[]::new); // Collect into Integer[]
+
+// Sorting the array in descending order
+Arrays.sort(boxedNumbers, Collections.reverseOrder());
+
+For large dataset we need to use QuickSort or MergeSort
