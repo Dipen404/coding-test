@@ -1,0 +1,105 @@
+Java 8 introduced Optional class in the java.util package to provide a better way to handle situations where a value might be absent
+helping to avoid NullPointerException and making the code more expressive
+Optional is a container object that may or may not contain a non-null value. It's a way to explicitly express that a method
+might not return a value, forcing the caller to handle both cases.
+
+A. Key benefits of Optional
+1. Explicitly indicates that a value might be absent
+2. Reduces null check in code
+3. Provides a fluent API for handling absent values
+4. Makes the intent of your code clearer
+
+B. Creating Optional Objects
+1. Empty Optional
+Optional<String> emptyOptional=Optional.empty();
+
+2. Optional with non-null value
+Optional<String> nonEmptyOptional=Optional.of("something");
+//throws NullPointerException if value is null
+
+3. Optional that may be null
+String possibleNull=null;
+Optional<String> nullableOptional=Optional.ofNullable(possibleNull);
+//Accepts null values without throwing exception
+
+C. Checking Value Presence
+
+1. isPresent()
+
+Optional<String> opt = Optional.of("Java");
+if (opt.isPresent()) {
+    System.out.println("Value: " + opt.get());
+}
+
+2. isEmpty()
+
+Optional<String> opt = Optional.empty();
+if (opt.isEmpty()) {
+    System.out.println("No value present");
+}
+
+D. Retrieving Values
+
+1. get() Not Recommended (can throw NoSuchElementException)
+
+Optional<String> opt = Optional.of("Hello");
+String value = opt.get(); // "Hello"
+
+2. orElse() Provide default value
+The fallback value is computed or evaluated every time, even if the Optional is not empty
+
+Optional<String> opt = Optional.empty();
+String value = opt.orElse("Default"); // "Default", if value present then gives that value
+
+Optional<String> name = Optional.ofNullable(null);  // Empty Optional
+String result = name.orElse("Default Name");
+System.out.println(result);  // Output: Default Name
+
+Optional<String> anotherName = Optional.of("John Doe");  // Non-empty Optional
+String anotherResult = anotherName.orElse("Default Name");
+System.out.println(anotherResult);  // Output: John Doe
+
+3. orElseGet() Lazy default with Supplier
+it evaluates the fallback value lazily-only when the Optional is empty, while orElse always evaluates the fallback value
+even when it is not needed.
+
+Optional<String> opt = Optional.empty();
+String value = opt.orElseGet(() -> expensiveOperation()); // Only called if needed
+Optional<String> name = Optional.ofNullable(null);
+
+// Using orElse (returns default directly)
+String resultWithOrElse = name.orElse("Default Name");
+System.out.println(resultWithOrElse);  // Output: Default Name
+// Using orElseGet (computes default lazily)
+String resultWithOrElseGet = name.orElseGet(() -> "Lazy Default Name");
+System.out.println(resultWithOrElseGet);  // Output: Lazy Default Name (computed lazily)
+
+4. orElseThrow Throw exception if empty
+You want to ensure that a value is present in the Optional and explicitly handle the case where it is missing by throwing an exception
+It provides a clear way to fail fast in situations where the absence of a value is considered as error and must be handled immediately
+You need to throw custom exceptions for more meaningful error messages or specific application
+String result = value.orElseThrow(() -> new CustomException("Value not found"));
+
+Optional<String> opt = Optional.empty();
+String value = opt.orElseThrow(() -> new RuntimeException("Value not present"));
+
+E. Conditional Actions
+
+1. ifPresent() Execute action if value exists
+Typically used when you want to perform an action only when a value is present (sending notification, making a database update)
+
+Optional<String> opt = Optional.of("Hello");
+opt.ifPresent(val -> System.out.println("Value: " + val));// prints to console
+
+Optional<String> emptyOptional=Optional.empty();
+emptyOptional.ifPresent(value->System.out.println("this is the value "+value));//does nothing as value is absent
+
+2. ifPresentOrElse Execute action for both cases
+Used when you need to perform one action if the value is present and a different action when it is absent
+eg if user has credit card then make payment, else notify user to add credit card
+
+Optional<String> opt = Optional.empty();
+opt.ifPresentOrElse(
+    val -> System.out.println("Value: " + val),
+    () -> System.out.println("No value")
+);
