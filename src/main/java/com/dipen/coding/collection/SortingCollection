@@ -40,6 +40,8 @@ public class Main {
 
         System.out.println(students);
         // Output: [Bob (20), Alice (22), Charlie (25)]
+        //If class to be sorted implements Comparable then we can do the descending sorting also
+        Collections.sort(students,Comparator.reverseOrder());
     }
 }
 
