@@ -103,3 +103,158 @@ opt.ifPresentOrElse(
     val -> System.out.println("Value: " + val),
     () -> System.out.println("No value")
 );
+
+F. Transforming Values
+
+1. map() Transform value if present
+
+Optional<String> opt = Optional.of("hello");
+Optional<String> upper = opt.map(String::toUpperCase); // Optional["HELLO"]
+
+The map method allows you to apply a transformation to the value contained in the Optional if it is present and
+if it is absent it simply returns an empty Optional.
+
+Optional<String> name = Optional.of("John");
+
+// Use map to transform the value inside the Optional, if present
+Optional<String> uppercasedName = name.map(String::toUpperCase);
+uppercasedName.ifPresent(System.out::println);  // Prints: JOHN
+
+// Example with an empty Optional
+Optional<String> emptyName = Optional.empty();
+Optional<String> result = emptyName.map(String::toUpperCase);
+// If present, print the value
+result.ifPresent(System.out::println);  // Nothing is printed because the Optional is empty
+
+
+Optional<User> user = Optional.of(new User("Alice", "ALICE@EXAMPLE.COM"));
+
+Optional<String> emailLowerCase = user
+    .map(User::getEmail)         // Extract the email from the User object
+    .map(String::toLowerCase);   // Convert the email to lowercase
+
+emailLowerCase.ifPresent(System.out::println);  // Prints: alice@example.com
+
+We first extract the email using mao(User::getEmail)
+Then we convert it to lowercase with another map(String::toLowerCase)
+If user is Optional.empty(), then whole operation chain returns an empty Optional, and nothing happens
+
+When to use map with Optional
+When you wan to transform the value inside an Optional, such as converting the value to another type or applying a function to it
+When you want to avoid performing transformations or accessing the value if the Optional is empty
+
+2. flatMap() for nested Optional
+Optional<String> opt = Optional.of("hello");
+Optional<String> upper = opt.flatMap(s -> Optional.of(s.toUpperCase()));
+
+map(): Results in Optional<Optional<String>> when you apply a function that returns an Optional.
+You have to unwrap the result twice. Applies a function that returns a value. can result nested Optional
+Requires unwrapping nested Optional
+
+flatMap(): Avoids in Optional objects and directly a single Optional<String>, making it straightforward when the transformation
+functions returns an Optional. Applies a function that returns an Optional. Flattens the result into a single Optional
+Avoids nesting and unwrapping
+
+3. filter() Conditionally keep value
+
+Optional<String> opt = Optional.of("hello");
+Optional<String> filtered = opt.filter(s -> s.length() > 3); // Optional["hello"]
+Optional<String> empty = opt.filter(s -> s.length() > 10); // Optional.empty
+
+Returns the same Optional if the condition is true or an empty Optional if false
+Use filter when you need to conditionally remove the value inside the Optional based on a predicate
+keep the value only if it meets the condition
+It is especially useful when you want to avoid transforming the value but just want to decide
+whether to keep or discard it based on some logic
+
+
+
+Best Practices
+1. Do not use Optional for fields-it is not serializable
+2. Avoid optional in method parameters- can make API confusing
+3. Do not use Optional.get() without checking-defeats the purpose
+4. Prefer orElse/orElseGet over get()-safer alternatives
+5. Use Optional as return type- Clearly indicates potential absence
+
+Safe navigation
+public String getStreetName(Address address) {
+    return Optional.ofNullable(address)
+            .map(Address::getStreet)
+            .map(Street::getName)
+            .orElse("Unknown street");
+}
+
+Method that may not return a value
+public Optional<Employee> findEmployeeById(int id) {
+    // Database lookup that might return null
+    return Optional.ofNullable(employeeRepository.findById(id));
+}
+
+Combining Optionals
+Optional<String> first = Optional.of("Hello");
+Optional<String> second = Optional.of("World");
+
+Optional<String> combined = first.flatMap(f -> second.map(s -> f + " " + s));
+// Optional["Hello World"]
+
+How Optional prevents NPE
+public String getEmployeeName(Employee emp) {
+    return emp.getName(); // Throws NPE if emp is null
+}
+
+With Optional
+public Optional<String> getEmployeeName(Employee emp) {
+    return Optional.ofNullable(emp)
+                  .map(Employee::getName);
+}
+// Usage: Returns Optional.empty() if emp is null
+
+public String getStreetName(Company company) {
+    return company.getOffice().getAddress().getStreet();
+    // NPE if any intermediate object is null
+}
+
+With Optional
+public Optional<String> getStreetName(Company company) {
+    return Optional.ofNullable(company)
+                  .map(Company::getOffice)
+                  .map(Office::getAddress)
+                  .map(Address::getStreet);
+}
+// Returns Optional.empty() if any object in chain is null
+Without Optional
+public String findUserName(int id) {
+    User user = userRepository.findById(id);
+    return user != null ? user.getName() : "Unknown";
+}
+with Optional
+public String findUserName(int id) {
+    return userRepository.findById(id)
+                        .map(User::getName)
+                        .orElse("Unknown");
+}
+
+NPE risk
+public class OrderProcessor {
+    public String processOrder(Order order) {
+        return order.getCustomer().getAddress().getCity().toUpperCase();
+        // Any of these could be null:
+        // - order
+        // - getCustomer()
+        // - getAddress()
+        // - getCity()
+    }
+}
+
+Safe code with Optional
+public class OrderProcessor {
+    public String processOrder(Order order) {
+        return Optional.ofNullable(order)
+            .map(Order::getCustomer)
+            .map(Customer::getAddress)
+            .map(Address::getCity)
+            .map(String::toUpperCase)
+            .orElse("UNKNOWN_CITY");
+    }
+}
+
