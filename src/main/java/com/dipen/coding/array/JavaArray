@@ -1,0 +1,155 @@
+1. What is an Array?
+An Array is a container object that holds a fixed number of a single data type. Arrays are zero-indexed,
+meaning the first element is at index 0.
+
+2. Declaring an Array
+dataType [] arrayName;
+dataType arrayName[];//not preferred
+int [] numbers; //Declares array of integers
+String [] names; //Declares array of String
+
+3. Creating an Array
+You can create an array using new keyword
+arrayName=new dataType[arraySize];
+
+numbers=int[5];// creates an array of 5 integers
+names=String[10];// creates an array of 10 String
+
+You can declare and create array in single line
+int[] numbers=new int[5];
+
+4. Initializing an array
+numbers[0] = 10;
+numbers[1] = 20;
+numbers[2] = 30;
+numbers[3] = 40;
+numbers[4] = 50;
+
+direct initialization during creation
+int [] numbers= {10,20,30,40,50};
+
+5. Accessing Array Elements
+Array elements are accessed using their index, starting from 0
+int firstElement=numbers[0];// array start with 0 index which will be first element
+int lastElement=numbers[4]; // this is last element or 5th element
+
+6. Array length
+You can get length of an using the length property
+
+int length=numbers.length;// returns 5
+
+7. Iterating over an array
+you can use for loop or for-each loop to iterate over an array
+for (int i = 0; i < numbers.length; i++) {
+    System.out.println(numbers[i]);
+}
+
+for (int number : numbers) {
+    System.out.println(number);
+}
+
+8. Multidimensional array
+These are arrays of array
+int [][] matrix=new int[3][3];//3x3 matrix
+int [][] matrix={{1,2,3},{4,5,6},{7,8,9}};
+
+accessing elements in a multidimensional array
+int value=matrix [1][2];//access the element in the second row and third column
+
+Since arrays in Java are not objects (they are considered primitives types), they do not have built in methods for operations
+like sorting or searching. The Arrays class is a utility class that contains static methods to perform various operations on arrays
+Sorting:Arrays.sort()
+Searching:Arrays.binarySearch()
+Filling:Arrays.fill()
+Equality Check:Arrays.equals()
+Copying: Arrays.copyOf()
+
+9. Filling an array
+You can Arrays.fill() to fill an entire array with a single value
+
+int [] numbers= new int [5];
+Arrays.fill(numbers, 10); // Fill the array with the value 10
+System.out.println(Arrays.toString(nums));// Output: [10,10,10,10,10]
+
+10. Checking if tow arrays are equal
+Arrays.equals() compares arrays for equality (same elements, same order)
+
+int[] nums1 = {1, 2, 3};
+int[] nums2 = {1, 2, 3};
+boolean areEqual = Arrays.equals(nums1, nums2);
+System.out.println("Are the arrays equal? " + areEqual); // Output: true
+
+11. Copying an Array
+Arrays.copyOf() allows you to copy an array, optionally resizing it.
+
+int[] original = {1, 2, 3, 4, 5};
+int[] copy = Arrays.copyOf(original, 3);  // Copy only the first 3 elements
+System.out.println(Arrays.toString(copy)); // Output: [1, 2, 3]
+
+int [] a1={1,2,3};
+int [] a2={3,2,1};
+
+int [] copied={3,6,7,8,9};
+System.out.println(copied.length); //output 5
+copied=Arrays.copyOf(a1,2);
+System.out.println(Arrays.toString(copied)); //output [1,2]
+System.out.println(copied.length); //output 2
+
+12. Converting an Array to a List
+You can convert an array to a list using Arrays.asList() but this works only for objects, not primitive type
+String[] stringArray = {"a", "b", "c"};
+List<String> list = Arrays.asList(stringArray);
+System.out.println(list);  // Output: [a, b, c]
+
+
+13. Sorting an array
+You do not need to write your own sorting logic,  you can use Arrays.sort()
+
+int[] nums = {3, 1, 4, 5, 2};
+Arrays.sort(nums); // Sort the array in ascending order
+System.out.println(Arrays.toString(nums)); // Output: [1, 2, 3, 4, 5]
+
+For descending order, you can use a custom comparator (although you need to convert the array to a Integer[] object since
+primitive types like int [] do not support comparators)
+
+Integer[] nums = {50, 30, 10, 40, 20};  // Use Integer, not int
+Arrays.sort(nums, Collections.reverseOrder());  // Sorts in descending order
+System.out.println("Sorted Array (Descending): " + Arrays.toString(nums));
+Sorted Array (Descending): [50, 40, 30, 20, 10]
+
+14. Reversing an Array
+You can reverse an array by swapping elements from start and end
+
+public static void reverse(int[] arr) {
+        int left = 0;
+        int right = arr.length - 1;
+        while (left < right) {
+            // Swap the elements
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+15. Searching for an element in an array
+You can search for an element using a simple linear search or a binary search (if the array is sorted)
+public static int linearSearch(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key) {
+                return i;  // Return index if found
+            }
+        }
+        return -1;  // Return -1 if element not found
+    }
+//using binarySearch as array is sorted
+int[] nums = {10, 20, 30, 40, 50};
+int key = 30;
+int result = Arrays.binarySearch(nums, key);  // Uses binary search
+
+Linear Search : O(n)
+Binary Search: O(log n)
+Sorting: O(n log n) //merge sort, quick sort or heap sort
+
+sorting+binary search: O(n log n)+O(log n)=O(n log n)
