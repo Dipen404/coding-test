@@ -95,14 +95,27 @@ copied=Arrays.copyOf(a1,2);
 System.out.println(Arrays.toString(copied)); //output [1,2]
 System.out.println(copied.length); //output 2
 
-12. Converting an Array to a List
+12. Copy array with copyOfRange method
+public static int [] copyOfRange(int [] original, int from , int to)
+original: the original array you want to copy from
+from : the starting index (inclusive) of the range to copy
+to: the ending index (exclusive) of the range to copy
+
+int[] originalArray = {10, 20, 30, 40, 50, 60, 70};
+
+// Copy elements from index 2 to 5 (exclusive)
+int[] copiedArray = Arrays.copyOfRange(originalArray, 2, 5);
+// Print the copied array
+System.out.println(Arrays.toString(copiedArray));  // Output: [30, 40, 50]
+
+13. Converting an Array to a List
 You can convert an array to a list using Arrays.asList() but this works only for objects, not primitive type
 String[] stringArray = {"a", "b", "c"};
 List<String> list = Arrays.asList(stringArray);
 System.out.println(list);  // Output: [a, b, c]
 
 
-13. Sorting an array
+14. Sorting an array
 You do not need to write your own sorting logic,  you can use Arrays.sort()
 
 int[] nums = {3, 1, 4, 5, 2};
@@ -117,7 +130,7 @@ Arrays.sort(nums, Collections.reverseOrder());  // Sorts in descending order
 System.out.println("Sorted Array (Descending): " + Arrays.toString(nums));
 Sorted Array (Descending): [50, 40, 30, 20, 10]
 
-14. Reversing an Array
+15. Reversing an Array
 You can reverse an array by swapping elements from start and end
 
 public static void reverse(int[] arr) {
@@ -133,7 +146,7 @@ public static void reverse(int[] arr) {
         }
     }
 
-15. Searching for an element in an array
+16. Searching for an element in an array
 You can search for an element using a simple linear search or a binary search (if the array is sorted)
 public static int linearSearch(int[] arr, int key) {
         for (int i = 0; i < arr.length; i++) {
