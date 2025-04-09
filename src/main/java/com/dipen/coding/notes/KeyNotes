@@ -1,0 +1,39 @@
+1. Java Objects (including arrays), custom objects are passed by reference which means that when you pass an object to
+a method, the method gets a reference (or pointer) to that object, not a copy of the object itself.
+So, when you modify the object's state (it's properties or values) inside the method, those changes will be reflected
+in the original object from the calling code because both the method and the calling code are referencing
+the same object in memory.
+Strings and Wrapper classes are immutable so even if they are object as passed by reference , the change is not
+reflected in the calling part
+
+Arrays and Objects are passed by reference in java
+This means that changes made to the array or object in the method will affect the original
+array or object in the calling code.
+Primitive Data Types (like int, double etc) are passed by value
+When you pass a primitive to a method the method gets a copy of the value, so changes inside the method
+do not affect the original value in the calling code.
+
+public class Example {
+    public static void modifyArray(int[] array) {
+        array[0] = 100; // Modifying the array element
+    }
+
+    public static void main(String[] args) {
+        int[] numbers = {1, 2, 3};
+        modifyArray(numbers); // Passing array to the method
+        System.out.println(Arrays.toString(numbers)); // Output: [100, 2, 3]
+    }
+}
+
+
+public class Example {
+    public static void modifyValue(int value) {
+        value = 100; // Modifying the value (won't affect the original)
+    }
+
+    public static void main(String[] args) {
+        int num = 5;
+        modifyValue(num); // Passing primitive to the method
+        System.out.println(num); // Output: 5 (no change)
+    }
+}

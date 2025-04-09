@@ -166,3 +166,14 @@ Binary Search: O(log n)
 Sorting: O(n log n) //merge sort, quick sort or heap sort
 
 sorting+binary search: O(n log n)+O(log n)=O(n log n)
+
+OptionalInt, OptionalDouble and OptionalLogn are typically used in operations such as max(), min(), average(), reduce()
+and sum() when dealing with primitive data types (int, double, long) which might return an empty result if the collection
+or stream is empty. These specialized Optional classes help to handle cases where a value might not be present without
+resorting to null or default values, providing a more type safe and clear way to express no result
+
+int [] arr={2,5,6,3,23};
+OptionalInt max=Arrays.stream(arr).max();
+if(max.isPresent){
+max.getAsInt();
+}
