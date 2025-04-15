@@ -1,0 +1,129 @@
+Date objects are static, the clock is not running, the computer clock is ticking, date objects are not
+
+A. JavaScript Date Output
+By default, JS will use the browser's time zone and display a date as a full text string
+Tue Apr 15 2025 12:18:34 GMT+0545 (Nepal Time)
+
+B. Creating Date Objects
+Date objects are created with the new Date() constructor.
+There are 9 ways to create a new date object:
+
+new Date()
+new Date(date string)
+new Date(year,month)
+new Date(year,month,day)
+new Date(year,month,day,hours)
+new Date(year,month,day,hours,minutes)
+new Date(year,month,day,hours,minutes,seconds)
+new Date(year,month,day,hours,minutes,seconds,ms)
+new Date(milliseconds)
+
+new Date() creates a date object with the current date and time
+
+new Date(date string) creates a date object from a date string
+const d = new Date("October 13, 2014 11:13:00"); //output Mon Oct 13 2014 11:13:00 GMT+0545 (Nepal Time)
+const d = new Date("2022-03-25"); //output Fri Mar 25 2022 05:45:00 GMT+0545 (Nepal Time)
+
+new Date(year,month,...) creates a date object with a specified date and time
+7 numbers specify year, month, day, hour, minute, second and millisecond (in that order)
+
+const d = new Date(2018, 11, 24, 10, 33, 30, 0); //output Mon Dec 24 2018 10:33:30 GMT+0545 (Nepal Time)
+JS counts months from 0 to 11, January=0, December=11
+Specifying a month higher than 11 will not result in an error but add the overflow to the next year
+const d = new Date(2018, 15, 24, 10, 33, 30); is same as new Date(2019, 3, 24, 10, 33, 30);
+
+upto 2 numbers specify year and month
+const d = new Date(2018, 11); //Sat Dec 01 2018 00:00:00 GMT+0545 (Nepal Time)
+You can not omit month. If you supply only one parameter it will be treated as milliseconds
+const d = new Date(2018); //output Thu Jan 01 1970 05:30:02 GMT+0530 (Nepal Time)
+
+C. Previous Century
+One and two digits years will be interpreted as 19xx
+new Date(99, 11, 24); //output Fri Dec 24 1999 00:00:00 GMT+0545 (Nepal Time)
+new Date(9, 11, 24); //output Fri Dec 24 1909 00:00:00 GMT+0541 (Nepal Time)
+
+D. JS stores dates as milliseconds since January 01, 1970
+new Date(milliseconds) creates a new date object as milliseconds plus zero time
+new Date(100000000000); 01 January 1970 plus 100 000 000 000 milliseconds
+
+E. Displaying Dates
+JS will (by default) output dates using the toString()  method. This is a string representation of the date, including the
+time zone. The format is specified in the ECMAScript specification
+Tue Apr 15 2025 12:18:34 GMT+0545 (Nepal Time)
+When you display a date object in HTML, it is automatically converted to a string with the toString() method.
+The toDateString() method converts a date to a more readable format
+
+const d = new Date();
+d.toDateString(); //output Tue Apr 15 2025
+
+The toUTCString() method converts a date to a sting using the UTC standard
+const d = new Date();
+d.toUTCString(); //output Tue, 15 Apr 2025 06:55:31 GMT
+
+The toISOString() method converts a date to a string using the ISO format
+
+const d = new Date();
+d.toISOString();
+
+2025-04-15T06:56:27.340Z
+
+F. JS Date Input
+There are generally 3 types of JS date input formats
+ISO Date:"2015-03-25" (The International Standard)
+Short Date:"03/25/2015"
+Long Date:"Mar 25 2015" or "25 Mar 2015"
+
+G. Independent of input format, JS will by default output dates in full text string format
+Tue Apr 15 2025 12:42:06 GMT+0545 (Nepal Time)
+
+H. JS ISO Dates
+Complete Date: new Date("2015-03-25");
+Year and Month: new Date("2015-03");
+Only Year: new Date("2015");
+Date-Time:ISO dates can be written with added hours, minutes, and seconds (YYYY-MM-DDTHH:MM:SSZ):
+new Date("2015-03-25T12:00:00Z");
+Date and Time is seperated with a capital T
+UTC time is defined with a capital letter Z
+
+I. JS Get date methods
+In JS date objects are created with new Date(), which will returns a date object with the current date and time
+
+getFullYear()	Get year as a four digit number (yyyy)
+getMonth()	Get month as a number (0-11)
+getDate()	Get day as a number (1-31)
+getDay()	Get weekday as a number (0-6)
+getHours()	Get hour (0-23)
+getMinutes()	Get minute (0-59)
+getSeconds()	Get second (0-59)
+getMilliseconds()	Get millisecond (0-999)
+getTime()	Get time (milliseconds since January 1, 1970)
+
+To return month or day as name we can use array
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+const d = new Date("2021-03-25");
+let month = months[d.getMonth()]; //Output March
+
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+const d = new Date("2021-03-25");
+let day = days[d.getDay()]; //output Thursday
+
+The Date.now() returns the number of milliseconds since January 1, 1970
+
+J. Set Date Methods
+
+Set Date methods let you set date values (years, months, days, hours,  minutes, seconds, milliseconds) for a Date Object
+
+setDate()	Set the day as a number (1-31)
+setFullYear()	Set the year (yyyy)
+setHours()	Set the hour (0-23)
+setMilliseconds()	Set the milliseconds (0-999)
+setMinutes()	Set the minutes (0-59)
+setMonth()	Set the month (0-11)
+setSeconds()	Set the seconds (0-59)
+setTime()	Set the time (milliseconds since January 1, 1970)
+
+const d = new Date("January 01, 2025");
+d.setFullYear(2020); //output Wed Jan 01 2020 00:00:00 GMT+0545 (Nepal Time)
+
