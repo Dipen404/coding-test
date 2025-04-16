@@ -1,132 +1,129 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
+import { useState } from "react";
 
-function App() {
-  const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem("tasks");
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  const [formData, setFormData] = useState({
-    title: "",
+export default function App() {
+  const [todo, setTodo] = useState({
     description: "",
-    dueDate: "",
+    reportDate: "",
   });
 
+  const [todos, setTodos] = useState([]);
   const [editId, setEditId] = useState(null);
+  const [errors, setErrors] = useState({
+    description: "",
+    reportDate: "",
+  });
 
-  // Save to localStorage
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
-
-  // Handle form changes (generic)
-  const handleChange = (e) => {
+  const changeHandler = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setTodo((prev) => ({
       ...prev,
       [name]: value,
     }));
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "", // Clear the error when the user starts typing
+    }));
   };
 
-  // Add new task
-  const addTask = () => {
-    if (!formData.title.trim()) return;
-
-    const newTask = {
-      id: Date.now(),
-      ...formData,
-    };
-
-    setTasks((prev) => [...prev, newTask]);
-    resetForm();
+  const validate = () => {
+    const newErrors = {};
+    if (!todo.description) {
+      newErrors.description = "Description is required";
+    }
+    if (!todo.reportDate) {
+      newErrors.reportDate = "Date is required";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  // Edit mode - populate form
-  const startEdit = (task) => {
-    setEditId(task.id);
-    setFormData({
-      title: task.title,
-      description: task.description,
-      dueDate: task.dueDate,
-    });
-  };
+  const handleSave = () => {
+    if (!validate()) return;
 
-  // Save updates
-  const updateTask = () => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === editId ? { ...task, ...formData } : task
-      )
-    );
-    resetForm();
-  };
+    const newTodo = { id: Date.now(), ...todo };
 
-  // Delete task
-  const deleteTask = (id) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
-  };
+    if (editId) {
+      setTodos((prev) =>
+        prev.map((item) =>
+          item.id === editId ? { ...item, ...todo } : item
+        )
+      );
+      setEditId(null);
+    } else {
+      setTodos((prev) => [...prev, newTodo]);
+    }
 
-  // Reset form
-  const resetForm = () => {
-    setFormData({
-      title: "",
+    setTodo({
       description: "",
-      dueDate: "",
+      reportDate: "",
     });
-    setEditId(null);
+    setErrors({
+      description: "",
+      reportDate: "",
+    });
+  };
+
+  const deleteHandler = (id) => {
+    setTodos((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const editHandler = (item) => {
+    setEditId(item.id);
+    setTodo({
+      description: item.description,
+      reportDate: item.reportDate,
+    });
   };
 
   return (
-    <div className="app">
-      <h1>📝 To-Do App</h1>
+    <>
+      <h1>Todo Application</h1>
 
-      <div className="form-container">
-        <input
-          type="text"
-          name="title"
-          placeholder="Task Title"
-          value={formData.title}
-          onChange={handleChange}
-        />
-        <textarea
-          name="description"
-          placeholder="Task Description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-        <input
-          type="date"
-          name="dueDate"
-          value={formData.dueDate}
-          onChange={handleChange}
-        />
+      <label>Description: </label>
+      <textarea
+        name="description"
+        value={todo.description}
+        onChange={changeHandler}
+      />
+      {errors.description && <p style={{ color: "red" }}>{errors.description}</p>}
 
-        <button onClick={editId ? updateTask : addTask}>
-          {editId ? "Update Task" : "Add Task"}
-        </button>
-      </div>
+      <br />
+      <br />
 
-      <ul className="task-list">
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <div className="task-item">
-              <h3>{task.title}</h3>
-              <p>{task.description}</p>
-              <small>Due Date: {task.dueDate}</small>
-              <div className="task-actions">
-                <button onClick={() => startEdit(task)}>Edit</button>
-                <button onClick={() => deleteTask(task.id)}>Delete</button>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <label>Report Date: </label>
+      <input
+        type="date"
+        name="reportDate"
+        value={todo.reportDate}
+        onChange={changeHandler}
+      />
+      {errors.reportDate && <p style={{ color: "red" }}>{errors.reportDate}</p>}
+
+      <br />
+      <br />
+
+      <button onClick={handleSave}>
+        {editId ? "Update" : "Add"}
+      </button>
+
+      <hr />
+
+      {todos.length > 0 && (
+        <ul>
+          {todos.map((item) => (
+            <li key={item.id}>
+              <label>Description: {item.description}</label>&nbsp;
+              <label>Report Date: {item.reportDate}</label>
+              <button onClick={() => deleteHandler(item.id)}>Delete</button>
+              <button onClick={() => editHandler(item)}>Edit</button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 }
 
-export default App;
 
 
 App.css
