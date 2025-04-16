@@ -1,0 +1,196 @@
+Since string are immutable in js, there are not mutator methods (all methods return new values without modifying
+original string)
+
+A. Accessor Methods (Extract information without modification)
+
+1. charAt()
+Signature: str.charAt(index)
+Returns: String (or empty string "")
+Description: Returns the character at the specified index.
+Example:
+"hello".charAt(1); // "e"
+"hello".charAt(10); // ""
+
+2. charCodeAt()
+Signature: str.charCodeAt(index)
+Returns: Number (UTF-16 code unit)
+Description: Returns the UTF-16 code unit of the character at the index.
+Example:
+"hello".charCodeAt(1); // 101
+
+3. codePointAt()
+Signature: str.codePointAt(index)
+Returns: Number (Unicode code point)
+Description: Returns the full Unicode code point (supports emojis/surrogate pairs).
+Example:
+"😊".codePointAt(0); // 128522
+
+4. includes()
+Signature: str.includes(searchString[, position])
+Returns: Boolean
+Description: Checks if the string contains the specified substring.
+Example:
+"hello".includes("ell"); // true
+"hello".includes("x"); // false
+
+5. indexOf()
+Signature: str.indexOf(searchString[, fromIndex])
+Returns: Number (index or -1)
+Description: Returns the first index of the specified substring.
+Example:
+"hello".indexOf("l"); // 2
+"hello".indexOf("x"); // -1
+
+6. lastIndexOf()
+Signature: str.lastIndexOf(searchString[, fromIndex])
+Returns: Number (index or -1)
+Description: Returns the last index of the specified substring.
+Example:
+"hello".lastIndexOf("l"); // 3
+"hello".lastIndexOf("x"); // -1
+
+7. startsWith()
+Signature: str.startsWith(searchString[, position])
+Returns: Boolean
+Description: Checks if the string starts with the specified substring.
+Example:
+"hello".startsWith("hel"); // true
+"hello".startsWith("lo"); // false
+
+8. endsWith()
+Signature: str.endsWith(searchString[, length])
+Returns: Boolean
+Description: Checks if the string ends with the specified substring.
+Example:
+"hello".endsWith("llo"); // true
+"hello".endsWith("hel"); // false
+
+B. Transformation Methods (Return new modified strings)
+
+1. toUpperCase()
+Signature: str.toUpperCase()
+Returns: String
+Description: Converts the string to uppercase.
+Example:
+"hello".toUpperCase(); // "HELLO"
+
+2. toLowerCase()
+Signature: str.toLowerCase()
+Returns: String
+Description: Converts the string to lowercase.
+Example:
+"HELLO".toLowerCase(); // "hello"
+
+3. trim()
+Signature: str.trim()
+Returns: String
+Description: Removes whitespace from both ends of the string.
+Example:
+"  hello  ".trim(); // "hello"
+
+4. trimStart() / trimLeft()
+Signature: str.trimStart() or str.trimLeft()
+Returns: String
+Description: Removes whitespace from the start of the string.
+Example:
+"  hello".trimStart(); // "hello"
+
+5. trimEnd() / trimRight()
+Signature: str.trimEnd() or str.trimRight()
+Returns: String
+Description: Removes whitespace from the end of the string.
+Example:
+"hello  ".trimEnd(); // "hello"
+
+6. padStart()
+Signature: str.padStart(targetLength[, padString])
+Returns: String
+Description: Pads the start of the string until it reaches the target length.
+Example:
+"7".padStart(3, "0"); // "007"
+
+7. padEnd()
+Signature: str.padEnd(targetLength[, padString])
+Returns: String
+Description: Pads the end of the string until it reaches the target length.
+Example:
+"7".padEnd(3, "0"); // "700"
+
+8. repeat()
+Signature: str.repeat(count)
+Returns: String
+Description: Returns a new string repeated count times.
+Example:
+"ha".repeat(3); // "hahaha"
+
+9. replace()
+Signature: str.replace(searchValue, replaceValue)
+Returns: String
+Description: Replaces the first match of searchValue with replaceValue.
+Example:
+"hello".replace("l", "x"); // "hexlo"
+
+10. replaceAll()
+Signature: str.replaceAll(searchValue, replaceValue)
+Returns: String
+Description: Replaces all matches of searchValue with replaceValue.
+Example:
+"hello".replaceAll("l", "x"); // "hexxo"
+
+C. Extraction Methods (Returns parts of the string)
+
+1. slice()
+Signature: str.slice(startIndex[, endIndex])
+Returns: String
+Description: Extracts a section of the string (supports negative indices).
+Example:
+"hello".slice(1, 3); // "el"
+"hello".slice(-3); // "llo"
+
+2. substring()
+Signature: str.substring(startIndex[, endIndex])
+Returns: String
+Description: Similar to slice() but doesn't support negative indices.
+Example:
+"hello".substring(1, 3); // "el"
+"hello".substring(2); // "llo"
+
+3. substr() (Deprecated)
+Signature: str.substr(startIndex[, length])
+Returns: String
+Description: Extracts length characters from startIndex (avoid, use slice()).
+Example:
+"hello".substr(1, 3); // "ell"
+
+4. split()
+Signature: str.split([separator[, limit]])
+Returns: Array
+Description: Splits the string into an array of substrings.
+Example:
+"a,b,c".split(","); // ["a", "b", "c"]
+"hello".split(""); // ["h", "e", "l", "l", "o"]
+
+D. String Combination and Conversion methods
+
+1. concat()
+Signature: str.concat(str2[, ...strN])
+Returns: String
+Description: Combines multiple strings.
+Example:
+"Hello".concat(" ", "World"); // "Hello World"
+
+2. toString()
+Signature: str.toString()
+Returns: String
+Description: Returns the string itself (used for object conversion).
+Example:
+const strObj = new String("hello");
+strObj.toString(); // "hello"
+
+3. valueOf()
+Signature: str.valueOf()
+Returns: String
+Description: Returns the primitive value of the string.
+Example:
+const strObj = new String("hello");
+strObj.valueOf(); // "hello"

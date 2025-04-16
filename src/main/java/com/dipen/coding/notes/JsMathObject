@@ -1,0 +1,103 @@
+The Javascript Math object provides a collection of properties and methods for mathematical constants and functions.
+
+A. Basic Math Methods
+
+1. Math.abs(x)
+Return type: Number
+Description: Returns the absolute value of a number
+Example:
+Math.abs(-5); // returns 5
+Math.abs(3.14); // returns 3.14
+
+2. Math.ceil(x)
+Return type: Number
+Description: Rounds a number up to the nearest integer
+Example:
+Math.ceil(4.2); // returns 5
+Math.ceil(-2.7); // returns -2
+
+3. Math.floor(x)
+Return type: Number
+Description: Rounds a number down to the nearest integer
+Example:
+Math.floor(4.9); // returns 4
+Math.floor(-2.7); // returns -3
+
+4. Math.round(x)
+Return type: Number
+Description: Rounds a number to the nearest integer
+Example:
+Math.round(4.4); // returns 4
+Math.round(4.5); // returns 5
+Math.round(-1.6); // returns -2
+
+5. Math.max([x[, y[, ...]]])
+Return type: Number
+Description: Returns the largest of zero or more numbers
+Example:
+Math.max(10, 20, 30); // returns 30
+Math.max(-1, -2, -3); // returns -1
+
+6. Math.min([x[, y[, ...]]])
+Return type: Number
+Description: Returns the smallest of zero or more numbers
+Example:
+Math.min(10, 20, 30); // returns 10
+Math.min(-1, -2, -3); // returns -3
+
+7. Math.trunc(x)
+Return type: Number
+Description: Returns the integer part of a number by removing any fractional digits
+Example:
+Math.trunc(4.9); // returns 4
+Math.trunc(-2.7); // returns -2
+
+8. Math.pow(x, y)
+Return type: Number
+Description: Returns x raised to the power of y
+Example:
+Math.pow(2, 3); // returns 8
+Math.pow(4, 0.5); // returns 2
+
+9. Math.random()
+Return type: Number
+Description: Returns a pseudo-random number between 0 (inclusive) and 1 (exclusive)
+Example:
+Math.random(); // returns a random number like 0.123456789
+// To get a random number between min and max:
+function getRandom(min, max) {
+  return Math.random() * (max - min) + min;
+  return Math.floor(Math.random()* (max-min+1))+min // between min and max (both included)
+}
+Math.random() always returns a number lower than 1
+Math.floor(Math.random()*10) // random integer from 0 to 9
+Math.floor(Math.random()*101) // returns a random integer from 0 to 100
+
+10. Math.sqrt(x)
+Return type: Number
+Description: Returns the square root of a number
+Example:
+Math.sqrt(9); // returns 3
+Math.sqrt(2); // returns ~1.4142
+
+11. Math.cbrt(x)
+Return type: Number
+Description: Returns the cube root of a number
+Example:
+Math.cbrt(8); // returns 2
+Math.cbrt(-27); // returns -3
+
+12. Math.hypot([x[, y[, ...]]])
+Return type: Number
+Description: Returns the square root of the sum of squares of its arguments
+Example:
+Math.hypot(3, 4); // returns 5
+Math.hypot(1, 1, 1, 1); // returns 2
+
+13. Math.sign(x)
+Return type: Number
+Description: Returns the sign of a number (1, -1, 0, -0, or NaN)
+Example:
+Math.sign(5); // returns 1
+Math.sign(-5); // returns -1
+Math.sign(0); // returns 0
