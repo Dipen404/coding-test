@@ -1,0 +1,223 @@
+import React, { useState, useEffect } from "react";
+import "./App.css";
+
+function App() {
+  const [tasks, setTasks] = useState(() => {
+    const saved = localStorage.getItem("tasks");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    dueDate: "",
+  });
+
+  const [editId, setEditId] = useState(null);
+
+  // Save to localStorage
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  // Handle form changes (generic)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Add new task
+  const addTask = () => {
+    if (!formData.title.trim()) return;
+
+    const newTask = {
+      id: Date.now(),
+      ...formData,
+    };
+
+    setTasks((prev) => [...prev, newTask]);
+    resetForm();
+  };
+
+  // Edit mode - populate form
+  const startEdit = (task) => {
+    setEditId(task.id);
+    setFormData({
+      title: task.title,
+      description: task.description,
+      dueDate: task.dueDate,
+    });
+  };
+
+  // Save updates
+  const updateTask = () => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === editId ? { ...task, ...formData } : task
+      )
+    );
+    resetForm();
+  };
+
+  // Delete task
+  const deleteTask = (id) => {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+  };
+
+  // Reset form
+  const resetForm = () => {
+    setFormData({
+      title: "",
+      description: "",
+      dueDate: "",
+    });
+    setEditId(null);
+  };
+
+  return (
+    <div className="app">
+      <h1>📝 To-Do App</h1>
+
+      <div className="form-container">
+        <input
+          type="text"
+          name="title"
+          placeholder="Task Title"
+          value={formData.title}
+          onChange={handleChange}
+        />
+        <textarea
+          name="description"
+          placeholder="Task Description"
+          value={formData.description}
+          onChange={handleChange}
+        />
+        <input
+          type="date"
+          name="dueDate"
+          value={formData.dueDate}
+          onChange={handleChange}
+        />
+
+        <button onClick={editId ? updateTask : addTask}>
+          {editId ? "Update Task" : "Add Task"}
+        </button>
+      </div>
+
+      <ul className="task-list">
+        {tasks.map((task) => (
+          <li key={task.id}>
+            <div className="task-item">
+              <h3>{task.title}</h3>
+              <p>{task.description}</p>
+              <small>Due Date: {task.dueDate}</small>
+              <div className="task-actions">
+                <button onClick={() => startEdit(task)}>Edit</button>
+                <button onClick={() => deleteTask(task.id)}>Delete</button>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+
+
+App.css
+.app {
+  text-align: center;
+  margin-top: 50px;
+  font-family: Arial, sans-serif;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-container input,
+.form-container textarea {
+  padding: 10px;
+  margin: 5px;
+  font-size: 16px;
+  width: 300px;
+  max-width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-container button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.form-container button:hover {
+  background-color: #45a049;
+}
+
+.task-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.task-list li {
+  background-color: #f9f9f9;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-item h3 {
+  margin: 0;
+}
+
+.task-item p {
+  margin: 5px 0;
+}
+
+.task-item small {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: gray;
+}
+
+.task-actions {
+  margin-top: 10px;
+}
+
+.task-actions button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.task-actions button:hover {
+  background-color: #0056b3;
+}
+
+.task-actions button:nth-child(2) {
+  background-color: #dc3545;
+}
+
+.task-actions button:nth-child(2):hover {
+  background-color: #c82333;
+}
