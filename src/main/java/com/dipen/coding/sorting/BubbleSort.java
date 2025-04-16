@@ -11,12 +11,12 @@ import java.util.Arrays;
 public class BubbleSort { //O(n^2) since two nested loop is used
     public static void getBubbleSort(int [] array){
         int length=array.length;
-        for(int i=0;i<length;i++){
-            for(int j=i+1;j<length;j++){
-                if(array[i]>array[j]) {
-                    int temp = array[i];
-                    array[i] = array[j];
-                    array[j] = temp;
+        for(int i=0;i<length-1;i++){ //total of length-1 passes required, already sorted in the length-1th pass
+            for(int j=0;j<length-1-i;j++){ //-i means i elements are already sorted, no need of comparison
+                if(array[j]>array[j+1]) {
+                    int temp = array[j];
+                    array[j] = array[j+1];
+                    array[j+1] = temp;
                 }
             }
         }

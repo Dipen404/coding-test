@@ -167,10 +167,19 @@ Sorting: O(n log n) //merge sort, quick sort or heap sort
 
 sorting+binary search: O(n log n)+O(log n)=O(n log n)
 
+17. converting primitive array to wrapper array
+We can stream the array apply boxed and then convert to array for wrapper
+
+int [] numbers={5,7,8,92,1,3};
+Integer [] nums=Arrays.stream(numbers).boxed().toArray(Integer[]::new);
+Integer [] nums=Arrays.stream(numbers).mapToObj(Integer::valueOf).toArray(Integer[]::new);
+System.out.println(Arrays.toString(nums));
+
 OptionalInt, OptionalDouble and OptionalLogn are typically used in operations such as max(), min(), average(), reduce()
-and sum() when dealing with primitive data types (int, double, long) which might return an empty result if the collection
+ when dealing with primitive data types (int, double, long) which might return an empty result if the collection
 or stream is empty. These specialized Optional classes help to handle cases where a value might not be present without
-resorting to null or default values, providing a more type safe and clear way to express no result
+resorting to null or default values, providing a more type safe and clear way to express no result, for sum() even if the
+list is empty it will return 0 so it does not have optional return
 
 int [] arr={2,5,6,3,23};
 OptionalInt max=Arrays.stream(arr).max();
