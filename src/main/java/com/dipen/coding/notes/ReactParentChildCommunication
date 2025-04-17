@@ -1,0 +1,176 @@
+In react data is usually passed between components in two primary ways
+1. parent to child via props
+2. child to parent via props as callback functions
+
+Sending data from child to parent happens in response to an event or change, is tied to an event or some
+kind of lifecycle methods like mounting or  updating
+onClick
+onChange
+onSubmit
+onSelect
+onBlur, onFocus other user interactions
+Without user interaction we can use when user loads in useEffect, setTimeout, state change
+
+We can send multiple values from child to parent, send them as separate arguments (not common)
+Better: Send them as a single object (preferred and clean)
+Group multiple pieces of data into a single object and sent it via callback
+
+1. Bundle into one object :Cleanest and easiest for grouped data
+2. Multiple arguments: Simple but limited, gets messy quickly
+3. Separate callbacks: Good if data is unrelated or sent at different times
+4. Context API: When components are not directly connected
+5. State management (Redux, Zustand): Complex state in large applications
+
+import {useState} from "react"
+import ChildComponent from './ChildComponent'
+export default function ParentComponent(){
+    const message="hello from parent"
+    const [messageFromChild, setMessageFromChild]=useState("not yet")
+    const msgFromChildHandler=(data)=>{
+        setMessageFromChild(data)
+    }
+    return <>
+        <div style={{color:"green"}}>
+                    <p>This is parent component</p>
+                    <p>Message from Child: {messageFromChild}</p>
+                    <ChildComponent parentMsg={message} onSend={msgFromChildHandler}/>
+                    <ChildComponent parentMsg={message} onSend={setMessageFromChild} /> // can directly use the setMethod to update the state
+                    // if we want to do more than set state like logging, validating or transforming data then we can use separate handler
+        </div>
+    </>
+
+
+import {useState, useEffect} from "react";
+export default function ChildComponent({parentMsg, onSend}){
+    const [childMsg, setChildMsg]=useState("default msg from child");
+    useEffect(()=>{
+        onSend(childMsg)
+    },[])
+    const [msg, setMsg]=useState("")
+    return <>
+        <div style={{color:"red"}}>
+            <p>this is child component</p>
+            <p>Parent Message: {parentMsg}</p>
+            <input
+                name="msg"
+                value={msg}
+                onChange={(e)=>{setMsg(e.target.value);onSend(e.target.value)}}
+                />
+            <button onClick={()=>onSend(msg)}>Call Parent</button>
+        </div>
+    </>
+}
+
+
+What is the Context API?
+In React, Context API is a way to pass data deeply through a component tree without having to manually pass props at every level.
+
+1. Theme Management : You want to toggle between light and dark mode across your app
+Steps:
+Create a ThemeContext
+Use a provider to wrap your app and hold the current theme
+Use useContext in components to access or change the theme
+
+// ThemeContext.js
+import { createContext, useState } from 'react';
+
+export const ThemeContext = createContext();
+
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () =>
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+
+// App.js
+import { ThemeProvider } from './ThemeContext';
+import Header from './Header';
+
+function App() {
+  return (
+    <ThemeProvider>
+      <Header />
+    </ThemeProvider>
+  );
+}
+
+
+// Header.js
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
+function Header() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
+  return (
+    <header style={{ background: theme === 'light' ? '#fff' : '#333' }}>
+      <button onClick={toggleTheme}>Toggle Theme</button>
+    </header>
+  );
+}
+
+
+//for multiple context providers
+
+// Providers.js
+import { AuthProvider } from './AuthContext';
+import { ThemeProvider } from './ThemeContext';
+
+const AppProviders = ({ children }) => (
+  <AuthProvider>
+    <ThemeProvider>
+      {children}
+    </ThemeProvider>
+  </AuthProvider>
+);
+
+export default AppProviders;
+
+// App.js
+import AppProviders from './Providers';
+import HomePage from './HomePage';
+
+function App() {
+  return (
+    <AppProviders>
+      <HomePage />
+    </AppProviders>
+  );
+}
+
+//for multiple context providers
+
+Bonus Tips: Custom Hooks (Cleaner Access)
+If you want a cleaner and consistent way to access each context, create custom hooks
+
+// useAuth.js
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
+
+export const useAuth = () => useContext(AuthContext);
+
+// useTheme.js
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
+export const useTheme = () => useContext(ThemeContext);
+
+
+import { useAuth } from './useAuth';
+import { useTheme } from './useTheme';
+
+function Dashboard() {
+  const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
+
+  // same JSX as above
+}
+
