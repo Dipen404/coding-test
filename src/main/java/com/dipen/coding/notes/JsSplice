@@ -1,0 +1,81 @@
+In Javascript, the splice() method is a powerful tool used to modify arrays. It can
+be used to add, remove or replace elements within an array at any position.
+
+Syntax:
+array.splice(start, deleteCount, item1, item2, ...)
+Returns an array containing deleted elements
+Parameters:
+1. start (Required):The index at which to start changing the array. If the value is negative, it counts from the end of the array
+2. deleteCount(Optional): The number of elements to remove from the array, starting at the start index.
+If omitted, it will remove all elements from start to the end of the array.
+3. item1, item2, ...(Optional): The elements to add to the array, starting at the start index.
+If not provided, no elements will be added, and only removal will occur
+
+
+Common Use Cases:
+1. Removing Elements
+2. Adding Elements
+3. Replacing Elements
+
+
+1. Removing elements from an Array
+To remove elements, you specify a start index and a deleteCount value that represents the number of elements you want to remove
+
+Example: Remove 2 elements starting from index 1
+let fruits = ['apple', 'banana', 'cherry', 'date'];
+fruits.splice(1, 2); // Start at index 1, remove 2 elements
+console.log(fruits); // Output: ['apple', 'date']
+
+2. Adding elements to an array
+You can add new elements without removing any existing ones by setting deleteCount to 0, and provide elements you want to add
+
+Example Add "orange" and "grape" starting from index 2
+let fruits = ['apple', 'banana', 'cherry', 'date'];
+fruits.splice(2, 0, 'orange', 'grape');
+console.log(fruits); // Output: ['apple', 'banana', 'orange', 'grape', 'cherry', 'date']
+
+3. Replacing elements
+You can also replace elements by removing some and adding new ones at the same time. To do this, you specify both the
+starting index and how many elements to remove, while also adding new elements.
+
+Example: Replace "banana" and "cherry" with "kiwi" and "mango"
+let fruits = ['apple', 'banana', 'cherry', 'date'];
+fruits.splice(1, 2, 'kiwi', 'mango');
+console.log(fruits); // Output: ['apple', 'kiwi', 'mango', 'date']
+
+4. Using negative indexes
+You can use negative numbers in the start argument to count from the end of the array
+
+Example: Remove the last 2 elements from the array
+let fruits = ['apple', 'banana', 'cherry', 'date'];
+fruits.splice(-2, 2); // Start 2 elements from the end, remove 2 elements
+console.log(fruits); // Output: ['apple', 'banana']
+
+5. Edge cases and considerations
+Empty deleteCount: If deleteCount is omitted, all elements from the start index to the end of the array are removed
+let fruits = ['apple', 'banana', 'cherry', 'date'];
+fruits.splice(1); // Remove all elements starting from index 1
+console.log(fruits); // Output: ['apple']
+
+deleteCount greater than array length: If deleteCount is greater than the number of elements from start to the end of array,
+splice() will simply remove all elements starting at the start index
+
+let fruits = ['apple', 'banana', 'cherry'];
+fruits.splice(1, 10); // Remove from index 1 to the end
+console.log(fruits); // Output: ['apple']
+
+
+
+Problem: Remove Elements Based on Condition Using splice()
+Problem: Write a function that removes all elements from an array that are smaller than a given number n using splice().
+The function should return the modified array.
+
+Problem: Reverse an Array Using push() and pop()
+Problem: Write a function that reverses an array without using the reverse() method.
+You can only use push() and pop() to achieve this. The function should return the reversed array.
+
+Problem: Remove All Odd Numbers Using shift()
+Problem: Write a function that removes all odd numbers from an array using the shift() method.
+The function should return the modified arr
+
+
