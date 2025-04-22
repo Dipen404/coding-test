@@ -37,3 +37,44 @@ public class Example {
         System.out.println(num); // Output: 5 (no change)
     }
 }
+
+
+//shallow and deep copy in js
+In js the terms shallow copy and deep copy refer to how objects and arrays are copied. The difference lies in whether
+nested objects or arrays are copied as well or if they are simply referenced
+
+Shallow Copy:
+A shallow copy means that only the first level of the object or array is copied. Nested objects or arrays are still
+references to the original, so change made to nested structure in the copy will affect the original as well.
+
+Deep Copy:
+A deep copy creates a new copy of the object or array, including all nested objects or arrays. So, changes to nested
+structures in the copy will affect not the original object
+
+Using spread operator (...) will make shallow copy
+If you need to perform a deep copy, you would need to use other methods like JSON.parse(JSON.stringify())
+or manually deep-copy the objects.
+
+Using JSON.parse() and JSON.stringify() (Quick and easy for plain objects and arrays)
+This method serializes the object into a JSON string and then deserializes it back into a new object or array.
+It performs a deep copy, but it comes with some limitations, such as not handling functions, undefined, RegExp,
+Date, Map, Set, or circular references.
+
+const original = {
+  name: 'Alice',
+  age: 25,
+  address: { city: 'Wonderland', zip: 12345 },
+  hobbies: ['reading', 'coding']
+};
+
+const deepCopy = JSON.parse(JSON.stringify(original));
+
+deepCopy.address.city = 'Dreamland';
+deepCopy.hobbies[0] = 'traveling';
+
+console.log(original.address.city); // "Wonderland" (original object is unchanged)
+console.log(original.hobbies[0]); // "reading" (original object is unchanged)
+
+console.log(deepCopy.address.city); // "Dreamland"
+console.log(deepCopy.hobbies[0]); // "traveling"
+

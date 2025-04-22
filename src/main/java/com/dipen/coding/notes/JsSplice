@@ -79,3 +79,34 @@ Problem: Write a function that removes all odd numbers from an array using the s
 The function should return the modified arr
 
 
+JS slice for array
+The slice() method in js is used to return a shallow copy of a portion of an array into a new array object,
+without modifying the original array. You can specify a start index and an optional end index to determine the
+section of the array you want to copy.
+
+array.slice(startIndex, endIndex)
+startIndex: The zero based index at which to start the extraction, if it is negative, it counts from the end
+of the array (eg -1 is the last element)
+endIndex(optional): The zero based index before which to end the extraction, if omitted, it slices until the end
+or the array, if negative it counts from the end
+
+The slice() method does not modify the original array, it returns a new array
+If startIndex is greater than the array length, an empty array is returned
+If endIndex is greater than the array length, it simply slices until the end of array
+
+let arr = [1, 2, 3, 4, 5];
+let result = arr.slice(1, 4);
+console.log(result); // Output: [2, 3, 4]
+
+
+let arr = [1, 2, 3, 4, 5];
+let result = arr.slice(2);
+console.log(result); // Output: [3, 4, 5]
+
+
+let arr = [1, 2, 3, 4, 5];
+let result = arr.slice(-3, -1);
+console.log(result); // Output: [3, 4]
+
+
+When you want to copy an entire array (use slice() with no arguments).
