@@ -91,6 +91,21 @@ console.log(fruits);  // Output: ['apple', 'banana', 'cherry', 'mango']
 let fruits = ['banana', 'apple', 'cherry', 'mango'];
 fruits.sort().reverse();  // Ascending first then reverse for descending order
 console.log(fruits);  // Output: ['mango', 'cherry', 'banana', 'apple']
+fruits.sort((a,b)=>b.localeCompare(a)) //sort desc for string without using reverse()
+
+const numbers = ["1", "10", "2", "300", "11"];
+// Sort the array numerically
+numbers.sort((a, b) => parseInt(a) - parseInt(b)); //numbers.sort((a, b) => Number(a) - Number(b));
+console.log(names); // ["1", "2", "10", "11", "300"]
+
+function sortByProperty(arr, property) {
+  return arr.sort((a, b) => typeof a[property]==="number"?a[property] - b[property]:a[property].localeCompare(b[property]));
+}
+const students = [
+   { name: 'Bob', score: 92 },
+  { name: 'Alice', score: 85 },
+  { name: 'Charlie', score: 78 }
+];
 
 
 7. Array.prototype.reverse()
