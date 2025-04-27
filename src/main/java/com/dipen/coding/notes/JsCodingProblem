@@ -1,0 +1,113 @@
+Find the most frequent element
+
+1. with edge case
+function frequency(string) {
+    if (array.length === 0) return null; // return null or any other indication for an empty array
+   let frequencyMap={}
+       let maxCount=0, maxCountElement;
+
+       for(let char of string){
+           frequencyMap[char]=(frequencyMap[char]||0)+1
+           if(frequencyMap[char]>maxCount){
+               maxCount=frequencyMap[char];
+               maxCountElement=char;
+           }
+       }
+       return maxCountElement;
+}
+
+2. for multiple elements share highest frequency
+function frequency(array) {
+    if (array.length === 0) return []; // return an empty array for no elements
+    let max = 0;
+    let count = {};
+    let res = [];
+    for (let item of array) {
+        count[item] = (count[item] || 0) + 1;
+        if (count[item] > max) {
+            max = count[item];
+            res = [item]; // reset the result array with the new item
+        } else if (count[item] === max) {
+            res.push(item); // add item to the result array if it has the same frequency
+        }
+    }
+    return res;
+}
+
+3. using reduce
+
+function findMostFrequentElement(arr) {
+  const frequencyMap = arr.reduce((acc, num) => {
+    acc[num] = (acc[num] || 0) + 1;
+    return acc;
+  }, {});
+
+  return Object.keys(frequencyMap).reduce((mostFrequent, key) => {
+    if (frequencyMap[key] > frequencyMap[mostFrequent]) {
+      return key;
+    }
+    return mostFrequent;
+  });
+  //return Object.keys(mapped).reduce((acc,curr)=>mapped[curr]>mapped[acc]?curr:acc)
+}
+
+4. character count
+
+function charCount(str) {
+  const count = {};
+  for (let char of str) {
+    count[char] = (count[char] || 0) + 1;
+  }
+  return count;
+}
+5. anagram
+O(n logn)
+function isAnagram(str1, str2) {
+  if (str1.length !== str2.length) return false;
+
+  return str1.split('').sort().join('') === str2.split('').sort().join('');
+}
+
+O(n)
+function isAnagram(str1, str2) {
+  if (str1.length !== str2.length) return false;
+
+  const freq1 = {};
+  const freq2 = {};
+
+  for (let char of str1) {
+    freq1[char] = (freq1[char] || 0) + 1;
+  }
+
+  for (let char of str2) {
+    freq2[char] = (freq2[char] || 0) + 1;
+  }
+
+  for (let char in freq1) {
+    if (freq1[char] !== freq2[char]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+O(n)
+function isAnagram(str1, str2) {
+  if (str1.length !== str2.length) return false;
+
+  const hashMap = {};
+
+  for (let char of str1) {
+    hashMap[char] = (hashMap[char] || 0) + 1;
+  }
+
+  for (let char of str2) {
+    if (!hashMap[char]) {
+      return false;
+    }
+    hashMap[char]--;
+  }
+
+  return true;
+}

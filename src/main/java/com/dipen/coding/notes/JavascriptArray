@@ -179,6 +179,8 @@ const citrus = fruits.slice(1, 3);
 // citrus: ['banana', 'orange']
 // fruits remains unchanged
 
+arr.slice() //makes a shallow copy of given array
+
 12. Array.prototype.join()
 Signature: arr.join([separator])
 Returns: String
@@ -491,3 +493,17 @@ const arr = [1, 2, 3, 4, 5];
 const newArr = arr.with(2, 6);
 // arr: [1, 2, 3, 4, 5] (unchanged)
 // newArr: [1, 2, 6, 4, 5]
+
+41. Rotate array right
+function rotateRight(array, rotateBy){
+    rotateBy=rotateBy%array.length;
+    if(rotateBy===0) return array.slice();
+    return array.slice(-rotateBy).concat(array.slice(0,array.length-rotateBy))
+}
+
+42. Rotate array left
+function rotateLeft(array, rotateBy){
+    rotateBy=rotateBy%array.length;
+    if(rotateBy===0) return array.slice();
+    return array.slice(rotateBy).concat(array.slice(0,rotateBy))
+}

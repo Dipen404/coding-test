@@ -1,0 +1,79 @@
+1. Brute Force Algorithm
+
+Approach: Try all possible solutions to find the correct one.
+Example: Linear search, checking all subsets in subset sum problem.
+Pros: Simple and guaranteed to find the solution.
+Cons: Often inefficient for large inputs.
+
+🔁 2. Divide and Conquer
+
+Approach: Divide the problem into smaller subproblems, solve them recursively, and combine the results.
+Example: Merge Sort, Quick Sort, Binary Search.
+Pros: Efficient and widely used.
+Cons: Requires recursive thinking and extra memory in some cases.
+
+🔁 3. Greedy Algorithm
+
+Approach: Make the locally optimal choice at each step with the hope of finding the global optimum.
+Example: Kruskal’s Algorithm, Prim’s Algorithm, Huffman Coding.
+Pros: Fast and often simple.
+Cons: Doesn’t always lead to the optimal solution.
+
+🔁 4. Dynamic Programming (DP)
+
+Approach: Break down problems into overlapping subproblems, solve each once, and store their results (memoization/tabulation).
+Example: Fibonacci sequence, Knapsack problem, Longest Common Subsequence.
+Pros: Very efficient for problems with overlapping subproblems.
+Cons: Needs good understanding of state transitions and memory.
+
+🧠 5. Backtracking
+
+Approach: Try out solutions and backtrack when you hit a dead-end.
+Example: N-Queens problem, Sudoku Solver, Subset Generation.
+Pros: Useful for constraint satisfaction problems.
+Cons: Can be slow (exponential time) if not optimized.
+
+🌳 6. Recursive Algorithms
+
+Approach: Solve a problem by solving smaller instances of the same problem.
+Example: Tree traversals, Tower of Hanoi.
+Pros: Elegant and often intuitive.
+Cons: Can lead to stack overflow if not implemented carefully.
+
+🔍 7. Searching Algorithms
+
+Approach: Find the location of a target value in data.
+Examples:
+Linear Search
+Binary Search
+Pros: Essential in all applications.
+Cons: Efficiency varies based on data and method.
+
+📊 8. Sorting Algorithms
+
+Approach: Rearranging data in a specific order.
+Examples:
+Bubble Sort
+Merge Sort
+Quick Sort
+Heap Sort
+Pros: Core part of many applications.
+Cons: Some are inefficient for large datasets.
+
+🧠 9. Hashing Algorithms
+
+Approach: Map data to fixed-size values using a hash function.
+Example: Hash tables, Hash maps.
+Pros: Very fast for searching, insertion, and deletion.
+Cons: Collisions and hash function design can be tricky.
+
+🚀 10. Graph Algorithms
+
+Approach: Solve problems on graphs (nodes and edges).
+Examples:
+BFS (Breadth-First Search)
+DFS (Depth-First Search)
+Dijkstra’s Algorithm
+Bellman-Ford
+Pros: Crucial for network, map, and relationship data.
+Cons: Can be complex and memory-intensive.
