@@ -240,11 +240,17 @@ Signature: arr.flat([depth])
 Returns: New array
 Description: Creates a new array with all sub-array elements concatenated.
 
+If we do not specify the depth, default depth is 1, Infinity flatten any level of depth
 const arr1 = [1, 2, [3, 4]];
 console.log(arr1.flat()); // [1, 2, 3, 4]
 
 const arr2 = [1, 2, [3, 4, [5, 6]]];
 console.log(arr2.flat(2)); // [1, 2, 3, 4, 5, 6]
+
+const arr = [1, [2, [3, [4, 5]]]];
+const flatArr = arr.flat(Infinity);
+console.log(flatArr); // [1, 2, 3, 4, 5]
+
 
 19. Array.prototype.flatMap()
 Signature: arr.flatMap(callback(currentValue[, index[, array]])[, thisArg])
