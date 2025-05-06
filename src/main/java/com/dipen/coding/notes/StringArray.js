@@ -287,3 +287,31 @@ function checkArraySorted(array){
     return true;
 }
 //29. sum of digits of number
+function sumOfDigits(num) {
+    return num
+        .toString()
+        .split('')
+        .reduce((sum, digit) => sum + Number(digit), 0);
+}
+function sumOfDigits(num) {
+    num = Math.abs(num); // Handle negative numbers
+    let sum = 0;
+    while (num > 0) {
+        sum += num % 10;     // Get the last digit
+        num = Math.floor(num / 10); // Remove the last digit
+    }
+    return sum;
+}
+//30. longest common prefix
+function longestCommonPrefix(strs) {
+    if (strs.length === 0) return "";
+    let prefix = strs[0];
+    for (let i = 1; i < strs.length; i++) {
+        while (strs[i].indexOf(prefix) !== 0) {
+            prefix = prefix.slice(0, -1); // remove last character
+            if (prefix === "") return "";
+        }
+    }
+    return prefix;
+}
+
