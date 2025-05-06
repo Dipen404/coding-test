@@ -227,3 +227,39 @@ function rotateLeft(array,n){
     if(n===0) return array.slice()
     return array.slice(n).concat(array.slice(0,n))
 }
+//25. Find the First Non-Repeating Character
+//O(n^2) as indexOf and lasIndexOf takes each O(n) less optinal
+function firstNonRepeatingChar(string){
+    for(let char of string){
+        if(string.indexOf(char)===string.lastIndexOf(char)){
+            return char;
+        }
+    }
+    return -1;
+}
+function firstNonRepeatingCharOptimal(string){
+    let freqObj={}
+    for(let char of string){
+        freqObj[char]=(freqObj[char]||0)+1
+    }
+    for(let key in freqObj){
+        if(freqObj[key]===1) return key;
+    }
+    return -1
+}
+//26. Merge two array without duplicates
+function mergeTwoArrays(first,second){
+    return [...new Set([...first,...second])]
+}
+//27. find duplicate from array
+function findDuplicate(array){
+    let obj={}
+    let duplicate=new Set();
+    for(let item of array){
+        obj[item]=(obj[item]||0)+1;
+        if(obj[item]>1){
+            duplicate.add(item)
+        }
+    }
+    return [...duplicate]
+}
