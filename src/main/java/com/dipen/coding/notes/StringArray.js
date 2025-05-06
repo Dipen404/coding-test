@@ -263,3 +263,27 @@ function findDuplicate(array){
     }
     return [...duplicate]
 }
+function findDuplicates(arr) {
+    let seen = new Set();
+    let duplicates = [];
+
+    for (let val of arr) {
+        if (seen.has(val)) {
+            duplicates.push(val);
+        } else {
+            seen.add(val);
+        }
+    }
+
+    return duplicates;
+}
+//28. check to see array is sorted in ascending order
+function checkArraySorted(array){
+    for(let i=0;i<array.length;i++){
+        if(array[i]>array[i+1]){
+            return false;
+        }
+    }
+    return true;
+}
+//29. sum of digits of number
