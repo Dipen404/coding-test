@@ -1,0 +1,57 @@
+Design patterns in Java are standard solutions to common software design problems.
+They are templates or best practices that can be used to solve typical challenges in object-oriented design.
+Design patterns in Java represent reusable solutions to common problems encountered during software development.
+They offer established best practices that promote maintainability, flexibility, and scalability in code.
+These patterns are broadly categorized into three main types:
+A. Creational Design Patterns: Focus on the process of creating objects
+B. Structural Design Patterns: Focus on how classes and objects are arranged to create larger, more complex structures
+in software development. They help to organize relationships between objects, making systems more flexible, reusable and
+maintainable
+C. Behavioral Design Patterns: Focus on how objects and classes interact and communicate in software development.
+They emphasize the collaboration between objects to effectively accomplish tasks and responsibilities
+making the system more manageable and adaptable
+
+Creational:
+1. Singleton: Ensures a class has only one instances and provide a global point of access to it
+Use Cases:Configuration managers, logging, database connections, caching, file systems
+
+2. Factory: The Factory Design Pattern in Java is a creational design pattern that provides a way to create objects
+without specifying the exact class of the object that will be created. Instead of instantiating objects directly using
+the new keyword, you use a factory method that returns an object of a common interface or abstract class.
+We create object without exposing the creation logic to the client and refer to newly created object using a common interface.
+
+Why Use the Factory Pattern?
+
+To decouple object creation from the client code.
+To follow the Open/Closed Principle: You can add new classes without changing existing code.
+To handle complex creation logic in a centralized place.
+
+Components of the Factory Pattern
+
+Product Interface: Common interface for all products.
+Concrete Products: Different implementations of the product interface.
+Factory Class: Has a method that returns instances of different products based on input.
+
+3. Builder: The Builder Design Pattern is a creational design pattern that allows you to construct complex objects step by step.
+It separates the construction of a complex object from its representation, allowing the same construction
+process to create different representations.
+
+When to Use Builder Pattern:
+
+When an object needs to be created with many optional attributes.
+When the object creation involves several steps.
+When you want to avoid a telescoping constructor pattern (many constructors with different combinations of parameters).
+
+Structural:
+
+1. Adapter: The Adapter Design Pattern is a structural design pattern that allows objects with
+incompatible interfaces to work together. It acts as a bridge between two incompatible interfaces.
+
+Why Use the Adapter Pattern?
+Imagine a scenario where you have a legacy system or a third-party API that doesn't match your application's expected
+interface. Rewriting the system or the new code isn't feasible. Instead, you use an adapter to make them compatible
+without changing their core code.
+Think of a power adapter. Your laptop charger has a US plug, but you're in the UK.
+The power adapter lets your charger plug fit into a UK socket, adapting one interface (plug) to another (socket).
+The Adapter Pattern allows flexibility, promotes code reuse, and supports integration with external or legacy code
+with minimal changes.
