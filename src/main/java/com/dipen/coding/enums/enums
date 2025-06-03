@@ -1,0 +1,91 @@
+In Java, Enums (short for Enumerations) are a special data type that allows you to define a collection of constants.
+An enum type is a special class that represents a group of constants (unchangeable variables, like final variables).
+Enums are used to represent a fixed set of related constants, making the code more readable and type-safe.
+
+Key Features of Enums:
+Type Safety: Enums provide type safety by restricting the values to a predefined set.
+Singleton Nature: Each value of an enum is a singleton, meaning there is only one instance of each constant.
+Built-in Methods: Java enums have built-in methods like values(), valueOf(), and others that can be used to work with enum constants.
+Can Have Fields, Methods, and Constructors: Enums can have fields, methods, and constructors, making them more
+powerful than just a collection of constants
+
+public enum Day {
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+}
+public class TestEnum {
+    public static void main(String[] args) {
+        Day today = Day.MONDAY;
+
+        switch (today) {
+            case MONDAY:
+                System.out.println("Start of the workweek!");
+                break;
+            case FRIDAY:
+                System.out.println("End of the workweek!");
+                break;
+            default:
+                System.out.println("Midweek day.");
+        }
+    }
+}
+
+public enum Day {
+    MONDAY("Start of workweek"),
+    TUESDAY("Second day of the week"),
+    WEDNESDAY("Midweek"),
+    THURSDAY("Almost Friday"),
+    FRIDAY("End of workweek"),
+    SATURDAY("Weekend"),
+    SUNDAY("Weekend, relaxing day");
+
+    private String description;
+
+    // Constructor to initialize the field
+    Day(String description) {
+        this.description = description;
+    }
+
+    // Method to retrieve the description
+    public String getDescription() {
+        return this.description;
+    }
+}
+
+public class TestEnum {
+    public static void main(String[] args) {
+        Day today = Day.MONDAY;
+        System.out.println("Today is " + today + ": " + today.getDescription());
+    }
+}
+
+1. values(): Returns an array of all enum constants.
+Day[] days = Day.values();
+for (Day day : days) {
+    System.out.println(day);
+}
+2. valueOf(String name): Returns the enum constant with the specified name (case-sensitive).
+Day day = Day.valueOf("MONDAY"); // Returns MONDAY
+3. ordinal(): Returns the position of the enum constant in its declaration (0-based)
+System.out.println(Day.MONDAY.ordinal()); // Prints 0
+
+
+Enums can also have methods to perform logic related to the constants.
+public enum Day {
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+
+    public boolean isWeekend() {
+        return this == SATURDAY || this == SUNDAY;
+    }
+}
+
+public class TestEnum {
+    public static void main(String[] args) {
+        Day today = Day.SATURDAY;
+        if (today.isWeekend()) {
+            System.out.println("It's the weekend!");
+        } else {
+            System.out.println("It's a weekday.");
+        }
+    }
+}
+
