@@ -35,9 +35,61 @@ public class Test{
         }
         return maxLength;
     }
+    public static int [] removeDuplicate(int [] array){
+        int [] original=array;
+        int length=original.length;
+        int count=0;
+        int [] result=new int [length];
+        for(int i=0;i<length;i++){
+            boolean isDuplicate=false;
+            for(int j=0;j<count;j++){
+                if(original[i]==result[j]){
+                    isDuplicate=true;
+                    break;
+                }
+            }
+            if(!isDuplicate){
+                result[count]=original[i];
+                count++;
+            }
+        }
+        //return result;
+        int [] unique=new int[count];
+        for(int i=0;i<count;i++){
+            unique[i]=result[i];
+        }
+        return unique;
+    }
+    public static int[] removeDuplicates(int[] arr) {
+        if (arr.length == 0) return new int[0];
+
+        // Step 1: Sort the array
+        Arrays.sort(arr);
+
+        // Step 2: Use a temporary array to collect unique elements
+        int[] temp = new int[arr.length];
+        int count = 0;
+
+        temp[count++] = arr[0];  // First element is always unique after sorting
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] != arr[i - 1]) {
+                temp[count++] = arr[i];
+            }
+        }
+
+        // Step 3: Copy to final array of correct size
+        int[] result = new int[count];
+        System.arraycopy(temp, 0, result, 0, count);
+
+        return result;
+    }
     public static void main(String[] args) {
-        System.out.println("hello java hello");
-        System.out.println(Test.maxLength("abba"));
+        //System.out.println("hello java hello");
+        //System.out.println(Test.maxLength("abba"));
+        int [] numbers={1,1,2,3,2,8,8,8,3};
+        int [] unique=Test.removeDuplicate(numbers);
+        System.out.print(Arrays.toString(unique));
     }
 }
 
